@@ -10,6 +10,6 @@ Each demo case contains one mixture audio and two target sound classes. For each
 
 ```text
 examples/
-├── smaple_01_harmonica_snare_drum/
+├── sample_01_harmonica_snare_drum/
 ├── sample_02_flute_hihat/
 └── sample_03_keys_jangling_saxophone/
