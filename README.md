@@ -1,6 +1,6 @@
 # ALC-GCF Demo Audio Samples
 
-This repository provides demo audio samples for ALC-GCF, a lightweight causal class-label-guided target sound extraction model.
+This repository provides demo audio samples and dataset preparation scripts for **ALC-GCF**, a lightweight causal class-label-guided target sound extraction model.
 
 ## Overview
 
@@ -13,3 +13,106 @@ examples/
 ├── sample_01_harmonica_snare_drum/
 ├── sample_02_flute_hihat/
 └── sample_03_keys_jangling_saxophone/
+
+data/
+├── download.py
+├── fsd_scaper_source_gen.py
+└── Sample.wav
+```
+
+## Demo Audio Samples
+
+Each demo case may contain the following files:
+
+| File pattern             | Description                                            |
+| ------------------------ | ------------------------------------------------------ |
+| `mixture.wav`            | Input mixture audio                                    |
+| `clean_<target>.wav`     | Ground-truth target sound for the specified class      |
+| `ALC_GCF_<target>.wav`   | Extracted output by the proposed ALC-GCF model         |
+| `SoundBeam_<target>.wav` | Extracted output by the SoundBeam baseline             |
+| `ACN_<target>.wav`       | Extracted output by the ACN-TCN baseline, if available |
+
+## Demo Cases
+
+### Sample 01: Harmonica and Snare drum
+
+This case contains two target sound classes:
+
+* `Harmonica`
+* `Snare_drum`
+
+Available outputs:
+
+* ALC-GCF
+* SoundBeam
+* ACN-TCN
+
+### Sample 02: Flute and Hi-hat
+
+This case contains two target sound classes:
+
+* `Flute`
+* `Hi-hat`
+
+Available outputs:
+
+* ALC-GCF
+* SoundBeam
+
+### Sample 03: Keys jangling and Saxophone
+
+This case contains two target sound classes:
+
+* `Keys_jangling`
+* `Saxophone`
+
+Available outputs:
+
+* ALC-GCF
+* SoundBeam
+
+## Data Preparation
+
+We use the same data simulation pipeline as Waveformer for target sound extraction. Audio mixtures are synthetically generated using the Scaper toolkit. FSDKaggle2018 is used as the foreground sound-event source, and TAU Urban Acoustic Scenes 2019 is used as the background sound source. Each mixture is described by a `.jams` specification file, following the FSDSoundScapes-style metadata used in Waveformer.
+
+### Dataset Sources
+
+The experiments are based on the following datasets:
+
+* FSDKaggle2018 for foreground sound events
+* TAU Urban Acoustic Scenes 2019 Development dataset for training and validation background scenes
+* TAU Urban Acoustic Scenes 2019 Evaluation dataset for test background scenes
+* FSDSoundScapes metadata for mixture specification
+* Scaper for soundscape simulation
+
+The original datasets are not redistributed in this repository due to dataset license restrictions. Please download them from their official sources before running the generation scripts.
+
+### Dataset Construction
+
+Go to the `data` directory:
+
+```bash
+cd data
+```
+
+Download the required dataset resources:
+
+```bash
+python download.py
+```
+
+Prepare Scaper-compatible foreground sources from FSDKaggle2018:
+
+```bash
+python fsd_scaper_source_gen.py
+```
+
+The generated dataset follows the same mixture construction setting as Waveformer, including the foreground and background sources, `.jams` metadata, target class labels, mixture audio, and clean target signals required for class-label-guided target sound extraction.
+
+`Sample.wav` is provided only as a format example and is not part of the training or test set.
+
+## Notes
+
+* All audio files are single-channel WAV files.
+* The demo samples are provided for qualitative comparison between the proposed method and baseline models.
+* The source code and pretrained checkpoints will be released after publication.
