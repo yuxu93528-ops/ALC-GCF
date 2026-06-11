@@ -73,17 +73,20 @@ Available outputs:
 
 ## Data Preparation
 
-We use the same data simulation pipeline as Waveformer for target sound extraction. Audio mixtures are synthetically generated using the Scaper toolkit. FSDKaggle2018 is used as the foreground sound-event source, and TAU Urban Acoustic Scenes 2019 is used as the background sound source. Each mixture is described by a `.jams` specification file, following the FSDSoundScapes-style metadata used in Waveformer.
+We use the same data simulation pipeline as Waveformer for target sound extraction. Audio mixtures are synthetically generated using the Scaper toolkit. Each mixture used in our experiments is described by a `.jams` file. The `.jams` specifications are generated using FSDKaggle2018 and TAU Urban Acoustic Scenes 2019 as the foreground and background sound sources, respectively.
+
+The dataset construction steps are adapted from the Waveformer repository:
+
+https://github.com/vb000/Waveformer
 
 ### Dataset Sources
 
 The experiments are based on the following datasets:
 
-* FSDKaggle2018 for foreground sound events
-* TAU Urban Acoustic Scenes 2019 Development dataset for training and validation background scenes
-* TAU Urban Acoustic Scenes 2019 Evaluation dataset for test background scenes
-* FSDSoundScapes metadata for mixture specification
-* Scaper for soundscape simulation
+* FSDKaggle2018: https://zenodo.org/records/2552860
+* TAU Urban Acoustic Scenes 2019: https://dcase.community/challenge2019/task-acoustic-scene-classification
+* FSDSoundScapes metadata: https://targetsound.cs.washington.edu/files/FSDSoundScapes.zip
+* Scaper: https://github.com/justinsalamon/scaper
 
 The original datasets are not redistributed in this repository due to dataset license restrictions. Please download them from their official sources before running the generation scripts.
 
@@ -95,24 +98,50 @@ Go to the `data` directory:
 cd data
 ```
 
-Download the required dataset resources:
+Download FSDKaggle2018 and TAU Urban Acoustic Scenes 2019 using the provided script:
 
 ```bash
 python download.py
 ```
 
-Prepare Scaper-compatible foreground sources from FSDKaggle2018:
+Download and uncompress FSDSoundScapes:
 
 ```bash
-python fsd_scaper_source_gen.py
+wget https://targetsound.cs.washington.edu/files/FSDSoundScapes.zip
+unzip FSDSoundScapes.zip
 ```
 
-The generated dataset follows the same mixture construction setting as Waveformer, including the foreground and background sources, `.jams` metadata, target class labels, mixture audio, and clean target signals required for class-label-guided target sound extraction.
+This step creates the `data/FSDSoundScapes` directory. The `FSDSoundScapes` directory contains `.jams` specifications for the training, validation, and test samples. The training and evaluation pipeline expects source samples from FSDKaggle2018 and TAU Urban Acoustic Scenes 2019 to be placed at specific locations relative to `FSDSoundScapes`.
+
+Uncompress FSDKaggle2018 and create Scaper-compatible foreground sources:
+
+```bash
+unzip FSDKaggle2018/\*.zip -d FSDKaggle2018
+python fsd_scaper_source_gen.py FSDKaggle2018 ./FSDSoundScapes/FSDKaggle2018 ./FSDSoundScapes/FSDKaggle2018
+```
+
+Uncompress TAU Urban Acoustic Scenes 2019 into the `FSDSoundScapes` directory:
+
+```bash
+unzip TAU-acoustic-sounds/\*.zip -d FSDSoundScapes/TAU-acoustic-sounds/
+```
+
+The generated dataset follows the same mixture construction setting as Waveformer, including foreground sound events, background acoustic scenes, `.jams` metadata, target class labels, mixture audio, and clean target signals required for class-label-guided target sound extraction.
 
 `Sample.wav` is provided only as a format example and is not part of the training or test set.
 
-## Notes
+## Reference
 
-* All audio files are single-channel WAV files.
-* The demo samples are provided for qualitative comparison between the proposed method and baseline models.
-* The source code and pretrained checkpoints will be released after publication.
+If you use the data simulation pipeline, please also cite Waveformer:
+
+```bibtex
+@misc{veluri2022realtime,
+  title={Real-Time Target Sound Extraction},
+  author={Bandhav Veluri and Justin Chan and Malek Itani and Tuochao Chen and Takuya Yoshioka and Shyamnath Gollakota},
+  year={2022},
+  eprint={2211.02250},
+  archivePrefix={arXiv},
+  primaryClass={cs.SD}
+}
+```
+
