@@ -2,7 +2,7 @@
 
 This repository provides demo audio samples and dataset preparation reference scripts for **ALC-GCF**, a lightweight causal class-label-guided target sound extraction model.
 
-This repository provides an inference-only demo for qualitative evaluation of ALC-GCF. It is not a full reproduction package. Training code, full model implementation, experimental configurations, ablation scripts, and the full evaluation pipeline are not included in this version. The full implementation will be released after acceptance/publication.
+This repository provides an inference-only demo for qualitative evaluation of ALC-GCF. It is not a full reproduction package. Training code, full model implementation, experimental configurations, ablation scripts, and the full evaluation pipeline are not included in this version. 
 
 ## Overview
 
