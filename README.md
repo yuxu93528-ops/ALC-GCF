@@ -1,8 +1,8 @@
 ﻿# ALC-GCF Demo Audio Samples
 
-This repository provides demo audio samples and dataset preparation reference scripts for **ALC-GCF**, a lightweight causal class-label-guided target sound extraction model.
+This repository provides an inference-only demo for qualitative evaluation of **ALC-GCF**, a lightweight causal class-label-guided target sound extraction model.
 
-This repository provides an inference-only demo for qualitative evaluation of ALC-GCF. It is not a full reproduction package. Training code, full model implementation, experimental configurations, ablation scripts, and the full evaluation pipeline are not included in this version. 
+This repository is not a full reproduction package. Training code, full model implementation, experimental configurations, ablation scripts, data preparation scripts, and the full evaluation pipeline are not included in this version. The full implementation will be released after acceptance/publication.
 
 ## Overview
 
@@ -18,10 +18,6 @@ ALC-GCF-main/
 │   ├── sample_01/
 │   ├── sample_02/
 │   └── sample_03/
-├── data/
-│   ├── download.py
-│   ├── fsd_scaper_source_gen.py
-│   └── Sample.wav
 ├── checkpoints/
 │   └── alc_gcf_demo.pt
 ├── outputs/
@@ -126,56 +122,12 @@ python inference.py --input examples/sample_03/mixture.wav --label Saxophone --m
 
 The extracted audio will be saved in the `outputs/` directory. These commands are intended for qualitative listening checks only.
 
-## Data Preparation Reference
+## Dataset Sources
 
-The `data/` directory provides reference scripts for preparing dataset sources and soundscape metadata following the same simulation setting used in our experiments. These scripts are included only to describe the data preparation protocol. This repository does not provide the full training pipeline, experimental configurations, model training code, complete dataset splits, or full evaluation scripts.
+The experiments described in the paper use publicly available datasets and tools, including FSDKaggle2018, TAU Urban Acoustic Scenes 2019, FSDSoundScapes metadata, and Scaper. The original datasets are not redistributed in this repository due to dataset license restrictions.
 
-We use the same data simulation setting as Waveformer for target sound extraction. Audio mixtures are synthetically generated using the Scaper toolkit. The soundscape metadata is based on FSDKaggle2018 and TAU Urban Acoustic Scenes 2019 as foreground and background sound sources, respectively.
-
-The dataset preparation reference is adapted from the Waveformer repository:
-
-https://github.com/vb000/Waveformer
-
-### Dataset Sources
-
-The experiments are based on the following datasets and tools:
-
-- FSDKaggle2018: https://zenodo.org/records/2552860
-- TAU Urban Acoustic Scenes 2019: https://dcase.community/challenge2019/task-acoustic-scene-classification
-- FSDSoundScapes metadata: https://targetsound.cs.washington.edu/files/FSDSoundScapes.zip
-- Scaper: https://github.com/justinsalamon/scaper
-
-The original datasets are not redistributed in this repository due to dataset license restrictions. Please download them from their official sources if you want to inspect the data preparation protocol.
-
-### Reference Scripts
-
-The `data/` directory contains:
-
-```text
-data/download.py
-data/fsd_scaper_source_gen.py
-data/Sample.wav
-```
-
-These scripts are provided as references for dataset source preparation only. They are not a full training or evaluation pipeline.
-
-`Sample.wav` is provided only as a format example and is not part of the training or test set.
-
-## Reference
-
-If you use the data simulation protocol, please also cite Waveformer:
-
-```bibtex
-@misc{veluri2022realtime,
-  title={Real-Time Target Sound Extraction},
-  author={Bandhav Veluri and Justin Chan and Malek Itani and Tuochao Chen and Takuya Yoshioka and Shyamnath Gollakota},
-  year={2022},
-  eprint={2211.02250},
-  archivePrefix={arXiv},
-  primaryClass={cs.SD}
-}
-```
+This inference-only demo repository does not include data preparation scripts, complete dataset splits, training data, or full evaluation scripts.
 
 ## Availability Notice
 
-This repository is intended for demo inference and qualitative evaluation during the review period. It is not a full reproduction package. Training code, full model implementation, experimental configurations, ablation scripts, and full evaluation pipeline are not included in this version. The full implementation will be released after acceptance/publication.
+This repository is intended for demo inference and qualitative evaluation during the review period. It is not a full reproduction package. Training code, full model implementation, experimental configurations, ablation scripts, data preparation scripts, and full evaluation pipeline are not included in this version. The full implementation will be released after acceptance/publication.
