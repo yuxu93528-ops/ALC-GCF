@@ -130,4 +130,4 @@ This inference-only demo repository does not include data preparation scripts, c
 
 ## Availability Notice
 
-This repository is intended for demo inference and qualitative evaluation during the review period. It is not a full reproduction package. Training code, full model implementation, experimental configurations, ablation scripts, data preparation scripts, and full evaluation pipeline are not included in this version. The full implementation will be released after acceptance/publication.
+This repository is intended for demo inference and qualitative evaluation during the review period. It is not a full reproduction package. Training code, full model implementation, experimental configurations, ablation scripts, data preparation scripts, and full evaluation pipeline are not included in this version. 
